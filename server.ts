@@ -1,11 +1,13 @@
 import express from "express";
 import pg from "pg";
+import env from "./env.json";
+
+
 const app = express();
 app.use(express.json());
 const port = 3000;
 const hostname = "localhost";
 
-import env from "./env.json";
 const Pool = pg.Pool;
 const pool = new Pool(env);
 pool.connect().then(function () {
