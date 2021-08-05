@@ -1,5 +1,15 @@
 import express, { Express, Request, Response } from "express";
 import pg from "pg";
+import { createGame, getGames } from "./queries/GamesQueries";
+import {
+  addPlayer,
+  getPlayer,
+  getPlayers,
+  updatePlayer,
+} from "./queries/PlayerQueries";
+import { createRank, getRanks } from "./queries/RankQueries";
+import { createStat, getStats } from "./queries/StatQueries";
+import { createTeam, getTeams } from "./queries/TeamsQueries";
 
 const PORT = 3001;
 const app: Express = express();
@@ -17,64 +27,51 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.post("/players", (req: Request, res: Response) => {
-  const player: Player = req.body;
-  pool
-    .query(
-      `INSERT INTO players(first_name, last_name)
-    Values($1, $2)
-    RETURNING *`,
-      [player.firstName, player.lastName]
-    )
-    .then((response) => {
-      console.log("Inserted player", player);
-      res.sendStatus(200);
-    })
-    .catch((response) => {
-      console.log("ERROR inserting player");
-      res.sendStatus(500);
-    });
+  addPlayer(req, res, pool);
 });
 
 app.put("/players", (req: Request, res: Response) => {
-  const player: Player = req.body;
-  pool
-    .query(
-      `UPDATE players
-      SET first_name = $1, last_name = $2
-      WHERE player_id=$3`,
-      [player.firstName, player.lastName,player.id]
-    )
-    .then((response) => {
-      console.log("Updated player", player);
-      res.sendStatus(200);
-    })
-    .catch((response) => {
-      console.log("ERROR inserting player");
-      res.sendStatus(500);
-    });
+  updatePlayer(req, res, pool);
 });
 
 app.get("/players", (req: Request, res: Response) => {
-  pool
-    .query(`SELECT * FROM players`)
-    .then((response) => {
-      res.status(200).json(response.rows);
-    })
-    .catch((response) => {
-      res.sendStatus(500);
-    });
+  getPlayers(req, res, pool);
 });
 
 app.get("/players/:id", (req: Request, res: Response) => {
-  const playerId = req.params.id;
-  pool
-    .query(`SELECT * FROM players WHERE player_id = $1`, [playerId])
-    .then((response) => {
-      res.status(200).json(response.rows[0]);
-    })
-    .catch((response) => {
-      res.sendStatus(500);
-    });
+  getPlayer(req, res, pool);
+});
+
+app.post("/games", (req: Request, res: Response) => {
+  createGame(req, res, pool);
+});
+
+app.get("/games", (req: Request, res: Response) => {
+  getGames(req, res, pool);
+});
+
+app.post("/ranks", (req: Request, res: Response) => {
+  createRank(req, res, pool);
+});
+
+app.get("/ranks", (req: Request, res: Response) => {
+  getRanks(req, res, pool);
+});
+
+app.post("/stats", (req: Request, res: Response) => {
+  createStat(req, res, pool);
+});
+
+app.get("/stats", (req: Request, res: Response) => {
+  getStats(req, res, pool);
+});
+
+app.post("/teams", (req: Request, res: Response) => {
+  createTeam(req, res, pool);
+});
+
+app.get("/teams", (req: Request, res: Response) => {
+  getTeams(req, res, pool);
 });
 
 app.listen(PORT, () => console.log(`Running on ${PORT}`));
