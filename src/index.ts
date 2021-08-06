@@ -50,6 +50,8 @@ app.get("/games", (req: Request, res: Response) => {
   getGames(req, res, pool);
 });
 
+//TODO /games DELETE, search by teams involved
+
 app.post("/ranks", (req: Request, res: Response) => {
   createRank(req, res, pool);
 });
@@ -58,9 +60,13 @@ app.get("/ranks", (req: Request, res: Response) => {
   getRanks(req, res, pool);
 });
 
+//TODO /ranks DELETE, search by team
+
 app.post("/stats", (req: Request, res: Response) => {
   createStat(req, res, pool);
 });
+
+//TODO /stats DELETE, search by player, team
 
 app.get("/stats", (req: Request, res: Response) => {
   getStats(req, res, pool);
