@@ -8,7 +8,13 @@ import {
   updatePlayer,
 } from "./queries/PlayerQueries";
 import { createRank, getRanks } from "./queries/RankQueries";
-import { createStat, getStats } from "./queries/StatQueries";
+import {
+  createStat,
+  getStats,
+  getStatsByGame,
+  getStatsByPlayer,
+  getStatsByTeam,
+} from "./queries/StatQueries";
 import { createTeam, getTeams } from "./queries/TeamsQueries";
 import cors from "cors";
 
@@ -68,10 +74,20 @@ app.post("/stats", (req: Request, res: Response) => {
   createStat(req, res, pool);
 });
 
-//TODO /stats DELETE, search by player, team
-
 app.get("/stats", (req: Request, res: Response) => {
   getStats(req, res, pool);
+});
+
+app.get("/stats/team/:id", (req: Request, res: Response) => {
+  getStatsByTeam(req, res, pool);
+});
+
+app.get("/stats/player/:id", (req: Request, res: Response) => {
+  getStatsByPlayer(req, res, pool);
+});
+
+app.get("/stats/game/:id", (req: Request, res: Response) => {
+  getStatsByGame(req, res, pool);
 });
 
 app.post("/teams", (req: Request, res: Response) => {

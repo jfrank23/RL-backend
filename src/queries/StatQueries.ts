@@ -47,3 +47,51 @@ export const getStats = (req: Request, res: Response, pool: Pool) => {
     return res.status(200).json(response.rows);
   });
 };
+
+export const getStatsByPlayer = (req: Request, res: Response, pool: Pool) => {
+  const playerId = req.params.id;
+  pool.query(
+    `SELECT * from stats
+  WHERE player_id = $1`,
+    [playerId],
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return res.sendStatus(500);
+      }
+      return res.status(200).json(response.rows);
+    }
+  );
+};
+
+export const getStatsByTeam = (req: Request, res: Response, pool: Pool) => {
+  const teamId = req.params.id;
+  pool.query(
+    `SELECT * from stats
+  WHERE team_id = $1`,
+    [teamId],
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return res.sendStatus(500);
+      }
+      return res.status(200).json(response.rows);
+    }
+  );
+};
+
+export const getStatsByGame = (req: Request, res: Response, pool: Pool) => {
+  const gameId = req.params.id;
+  pool.query(
+    `SELECT * from stats
+  WHERE game_id = $1`,
+    [gameId],
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return res.sendStatus(500);
+      }
+      return res.status(200).json(response.rows);
+    }
+  );
+};
