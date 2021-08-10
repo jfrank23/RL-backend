@@ -44,6 +44,6 @@ export const getStats = (req: Request, res: Response, pool: Pool) => {
       console.log(error);
       return res.sendStatus(500);
     }
-    return res.sendStatus(200).json(response.rows);
+    return res.status(200).json(response.rows);
   });
 };
