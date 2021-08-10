@@ -10,10 +10,12 @@ import {
 import { createRank, getRanks } from "./queries/RankQueries";
 import { createStat, getStats } from "./queries/StatQueries";
 import { createTeam, getTeams } from "./queries/TeamsQueries";
+import cors from "cors";
 
 const PORT = 3001;
 const app: Express = express();
 app.use(express.json());
+app.use(cors());
 
 const env = require("../env.json");
 const Pool = pg.Pool;

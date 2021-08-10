@@ -16,12 +16,17 @@ export const updatePlayer = (req: Request, res: Response, pool: Pool) => {
   pool.query(
     `UPDATE players
       SET first_name = $1, last_name = $2
-      WHERE player_id=$3`,
+      WHERE player_id=$3
+      RETURNING *`,
     [player.firstName, player.lastName, player.id],
     (error, response) => {
       if (error) {
         console.log(error);
-        return res.sendStatus(500);
+        res.sendStatus(500);
+      }
+      if (!response.rows.length) {
+        console.log("No players updated");
+        return res.sendStatus(404);
       }
       console.log("Updated player", player);
       return res.sendStatus(200);
