@@ -7,7 +7,7 @@ import {
   getPlayers,
   updatePlayer,
 } from "./queries/PlayerQueries";
-import { createRank, getRanks } from "./queries/RankQueries";
+import { createRank, getRanks, getRanksByTeam } from "./queries/RankQueries";
 import {
   createStat,
   getStats,
@@ -68,7 +68,11 @@ app.get("/ranks", (req: Request, res: Response) => {
   getRanks(req, res, pool);
 });
 
-//TODO /ranks DELETE, search by team
+app.get("/ranks/team/:id", (req: Request, res: Response) => {
+  getRanksByTeam(req, res, pool);
+});
+
+//TODO /ranks DELETE
 
 app.post("/stats", (req: Request, res: Response) => {
   createStat(req, res, pool);

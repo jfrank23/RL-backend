@@ -29,7 +29,7 @@ export const createTeam = (req: Request, res: Response, pool: Pool) => {
       return res.sendStatus(500);
     }
     console.log("Inserted ids", team);
-    return res.status(200).json(response.rows);
+    return res.status(200).json(response.rows[0]);
   });
 };
 
