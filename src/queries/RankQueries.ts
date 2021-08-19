@@ -47,3 +47,28 @@ export const getRanksByTeam = (req: Request, res: Response, pool: Pool) => {
     }
   );
 };
+
+export const getMostRecentRankByTeam = (
+  req: Request,
+  res: Response,
+  pool: Pool
+) => {
+  const teamId = req.params.id;
+  pool.query(
+    `select ranks.rank_id, ranks.game_id, ranks.rank
+    from games
+    left join ranks
+    on ranks.game_id = games.game_id
+    where ranks.team_id = $1
+    order by game_time DESC; `,
+    [teamId],
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return res.sendStatus(500);
+      }
+      console.log(response.rows);
+      return res.status(200).json(response.rows[0]);
+    }
+  );
+};

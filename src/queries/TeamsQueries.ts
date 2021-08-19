@@ -29,7 +29,7 @@ export const createTeam = (req: Request, res: Response, pool: Pool) => {
       return res.sendStatus(500);
     }
     console.log("Inserted ids", team);
-    return res.status(200).json(response.rows[0]);
+    return res.status(200).json(response.rows);
   });
 };
 
@@ -41,4 +41,20 @@ export const getTeams = (req: Request, res: Response, pool: Pool) => {
     }
     return res.status(200).json(response.rows);
   });
+};
+
+export const getTeamsById = (req: Request, res: Response, pool: Pool) => {
+  const teamId = req.params.id;
+  pool.query(
+    `SELECT * from teams
+  WHERE team_id = $1`,
+    [teamId],
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return res.sendStatus(500);
+      }
+      return res.status(200).json(response.rows[0]);
+    }
+  );
 };

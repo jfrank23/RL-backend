@@ -7,7 +7,12 @@ import {
   getPlayers,
   updatePlayer,
 } from "./queries/PlayerQueries";
-import { createRank, getRanks, getRanksByTeam } from "./queries/RankQueries";
+import {
+  createRank,
+  getMostRecentRankByTeam,
+  getRanks,
+  getRanksByTeam,
+} from "./queries/RankQueries";
 import {
   createStat,
   getStats,
@@ -15,7 +20,7 @@ import {
   getStatsByPlayer,
   getStatsByTeam,
 } from "./queries/StatQueries";
-import { createTeam, getTeams } from "./queries/TeamsQueries";
+import { createTeam, getTeams, getTeamsById } from "./queries/TeamsQueries";
 import cors from "cors";
 
 const PORT = 3001;
@@ -72,6 +77,9 @@ app.get("/ranks/team/:id", (req: Request, res: Response) => {
   getRanksByTeam(req, res, pool);
 });
 
+app.get("/ranks/team/recent/:id", (req: Request, res: Response) => {
+  getMostRecentRankByTeam(req, res, pool);
+});
 //TODO /ranks DELETE
 
 app.post("/stats", (req: Request, res: Response) => {
@@ -100,6 +108,10 @@ app.post("/teams", (req: Request, res: Response) => {
 
 app.get("/teams", (req: Request, res: Response) => {
   getTeams(req, res, pool);
+});
+
+app.get("/teams/:id", (req: Request, res: Response) => {
+  getTeamsById(req, res, pool);
 });
 
 app.listen(PORT, () => console.log(`Running on ${PORT}`));
