@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import pg from "pg";
-import { createGame, getGames } from "./queries/GamesQueries";
+import { createGame, getGames, getGamesByTeam } from "./queries/GamesQueries";
 import {
   addPlayer,
   getPlayer,
@@ -20,7 +20,12 @@ import {
   getStatsByPlayer,
   getStatsByTeam,
 } from "./queries/StatQueries";
-import { createTeam, getTeams, getTeamsById } from "./queries/TeamsQueries";
+import {
+  createTeam,
+  getSinglePlayersTeams,
+  getTeams,
+  getTeamsById,
+} from "./queries/TeamsQueries";
 import cors from "cors";
 
 const PORT = 3001;
@@ -61,6 +66,9 @@ app.post("/games", (req: Request, res: Response) => {
 
 app.get("/games", (req: Request, res: Response) => {
   getGames(req, res, pool);
+});
+app.get("/games/team/:id", (req: Request, res: Response) => {
+  getGamesByTeam(req, res, pool);
 });
 
 //TODO /games DELETE, search by teams involved
@@ -112,6 +120,9 @@ app.get("/teams", (req: Request, res: Response) => {
 
 app.get("/teams/:id", (req: Request, res: Response) => {
   getTeamsById(req, res, pool);
+});
+app.get("/teams/player/:id", (req: Request, res: Response) => {
+  getSinglePlayersTeams(req, res, pool);
 });
 
 app.listen(PORT, () => console.log(`Running on ${PORT}`));

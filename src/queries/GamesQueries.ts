@@ -37,3 +37,19 @@ export const getGames = (req: Request, res: Response, pool: Pool) => {
     return res.status(200).json(response.rows);
   });
 };
+
+export const getGamesByTeam = (req: Request, res: Response, pool: Pool) => {
+  const teamId = req.params.id;
+  pool.query(
+    `SELECT * from games 
+    WHERE blue_team=$1 or red_team=$1`,
+    [teamId],
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return res.sendStatus(500);
+      }
+      return res.status(200).json(response.rows);
+    }
+  );
+};

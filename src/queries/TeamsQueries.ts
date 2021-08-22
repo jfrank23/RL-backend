@@ -43,6 +43,26 @@ export const getTeams = (req: Request, res: Response, pool: Pool) => {
   });
 };
 
+export const getSinglePlayersTeams = (
+  req: Request,
+  res: Response,
+  pool: Pool
+) => {
+  const playerId = req.params.id;
+  pool.query(
+    `select * from teams
+  where player1=$1 or player2=$1 or player3=$1 or player4=$1`,
+    [playerId],
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return res.sendStatus(500);
+      }
+      return res.status(200).json(response.rows);
+    }
+  );
+};
+
 export const getTeamsById = (req: Request, res: Response, pool: Pool) => {
   const teamId = req.params.id;
   pool.query(
