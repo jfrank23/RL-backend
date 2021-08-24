@@ -53,3 +53,19 @@ export const getGamesByTeam = (req: Request, res: Response, pool: Pool) => {
     }
   );
 };
+
+export const getGamesById = (req: Request, res: Response, pool: Pool) => {
+  const gameId = req.params.id;
+  pool.query(
+    `SELECT * from games 
+    WHERE game_id=$1`,
+    [gameId],
+    (error, response) => {
+      if (error) {
+        console.log(error);
+        return res.sendStatus(500);
+      }
+      return res.status(200).json(response.rows);
+    }
+  );
+};

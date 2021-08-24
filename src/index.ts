@@ -1,6 +1,11 @@
 import express, { Express, Request, Response } from "express";
 import pg from "pg";
-import { createGame, getGames, getGamesByTeam } from "./queries/GamesQueries";
+import {
+  createGame,
+  getGames,
+  getGamesById,
+  getGamesByTeam,
+} from "./queries/GamesQueries";
 import {
   addPlayer,
   getPlayer,
@@ -69,6 +74,9 @@ app.get("/games", (req: Request, res: Response) => {
 });
 app.get("/games/team/:id", (req: Request, res: Response) => {
   getGamesByTeam(req, res, pool);
+});
+app.get("/games/:id", (req: Request, res: Response) => {
+  getGamesById(req, res, pool);
 });
 
 //TODO /games DELETE, search by teams involved
