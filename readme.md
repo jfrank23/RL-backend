@@ -4,7 +4,7 @@ npm install
 
 npm run serve
 
-It should automatically restart the server when you change index.ts
+It should automatically restart the server when you change files. Listens on Port 3001.
 
 Database setup:
 Ensure you have an env.json file in the RL-Backend/ folder
