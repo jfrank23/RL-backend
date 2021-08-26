@@ -17,7 +17,9 @@ Ensure you have an env.json file in the RL-Backend/ folder
 }
 
 psql --username postgres
+
 create database rldata;
+
 \c rldata
 
 drop table ranks;
