@@ -55,7 +55,7 @@ export const getMostRecentRankByTeam = (
 ) => {
   const teamId = req.params.id;
   pool.query(
-    `select ranks.rank_id, ranks.game_id, ranks.rank
+    `select ranks.rank_id, ranks.game_id, ranks.rank, ranks.team_id
     from games
     left join ranks
     on ranks.game_id = games.game_id
