@@ -23,9 +23,13 @@ create database rldata;
 \c rldata
 
 drop table ranks;
+
 drop table stats;
+
 drop table games;
+
 drop table teams;
+
 drop table players;
 
 
